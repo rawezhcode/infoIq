@@ -25,6 +25,9 @@ class HomeController extends GetxController {
 
   Future<void> getInfo() async {
     isloading = true;
+    if (Get.isDialogOpen == true) {
+      Get.back();
+    }
     update();
     try {
       var response = await Api.getInfo();
@@ -54,10 +57,6 @@ class HomeController extends GetxController {
           Get.toNamed(AppRoutes.INITIAL);
           return;
         }
-      }
-
-      if (Get.isDialogOpen == true) {
-        Get.back();
       }
 
       Get.dialog(
