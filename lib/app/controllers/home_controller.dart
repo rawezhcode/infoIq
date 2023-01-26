@@ -49,11 +49,15 @@ class HomeController extends GetxController {
       isloading = false;
       update();
     } on DioError catch (e) {
-      isloading = false;
-      update();
-      if (e.response!.data['error']['message'].contains('token is expired')) {
-        Get.toNamed(AppRoutes.INITIAL);
-        return;
+      if (e.response != null) {
+        if (e.response!.data['error']['message'].contains('token is expired')) {
+          Get.toNamed(AppRoutes.INITIAL);
+          return;
+        }
+      }
+
+      if (Get.isDialogOpen == true) {
+        Get.back();
       }
 
       Get.dialog(
